@@ -11,9 +11,9 @@ class Player:
         vel = 5
         keys = pygame.key.get_pressed()
 
-    def playerMovement(self, directionx, directiony):
-        self.vx =  (directionx * self.vel )
-        self.vy =  (directiony * self.vel )
+    def playerMovement(self, direction):
+        self.vx =  (direction.x * self.vel )
+        self.vy =  (direction.y * self.vel )
         
         self.x += self.vx
         self.y += self.vy

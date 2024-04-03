@@ -29,9 +29,9 @@ class Player:
 class Game:
     def __init__(self):
         py.init()
-        self.window_size = [1600, 900]
+        self.windowSize = [1600, 900]
         self.clock = py.time.Clock()
-        self.screen = py.display.set_mode(self.window_size)
+        self.screen = py.display.set_mode(self.windowSize)
         self.background = py.image.load("caveBG.png").convert()
         self.background = py.transform.scale(self.background, (1600, 900))
         self.player = Player(30, 7900)
@@ -53,7 +53,7 @@ class Game:
             self.draw_blocks(blockPosition)
 
             py.draw.circle(self.screen, (0, 0, 0), (self.player.x, int(self.player.y / 10)), 10)
-            py.draw.rect(self.screen, (0, 0, 0), [0, 800, self.window_size[0], 100])
+            py.draw.rect(self.screen, (0, 0, 0), [0, 800, self.windowSize[0], 100])
             py.display.flip()
             self.clock.tick(60)
 

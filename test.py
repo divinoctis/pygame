@@ -31,7 +31,7 @@ while not finished:
     py.draw.circle(screen, black, (x, int(y/10)), 10)
     py.draw.rect(screen, black, [0, 410, windowSize[0], 10])
     py.display.flip()
-    clock.tick(50)
+    clock.tick(60)
 
     for event in py.event.get():
         if event.type == py.QUIT:

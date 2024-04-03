@@ -62,6 +62,6 @@ if __name__ == "__main__":
 
 
 # CHOSES A FAIRE :
-# fonctions de collision pour le sol et les blocs
+# fonctions de collision pour le sol et les blocs (CHECK TEST.PY, à adapter avec ce code)
 # fonction pour "grimper" sur des objets type liane
 # fonction jump et rebond sur les murs

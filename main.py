@@ -59,3 +59,9 @@ class Game:
 if __name__ == "__main__":
     game = Game()
     game.run_game()
+
+
+# CHOSES A FAIRE :
+# fonctions de collision pour le sol et les blocs
+# fonction pour "grimper" sur des objets type liane
+# fonction jump et rebond sur les murs

@@ -14,7 +14,7 @@ class Player:
         if keys[py.K_q]:
             self.x -= 5
         if keys[py.K_z] and self.y == 7900:
-            self.speed = -70
+            self.speed = -80
             self.jumped = True
 
     def update_position(self):
@@ -36,13 +36,20 @@ class Game:
         self.background = py.transform.scale(self.background, (1600, 900))
         self.player = Player(30, 7900)
 
+    def draw_blocks(self, blockPosition):
+        for pos in blockPosition:
+            py.draw.rect(self.screen, (0, 0, 0), pos)
+
     def run(self):
         finished = False
+        blockPosition = [[200, 730, 70, 70], [500, 700, 70, 100], [800, 650, 700, 100]]
         while not finished:
             self.screen.blit(self.background, (0, 0))
             keys = py.key.get_pressed()
             self.player.move(keys)
             self.player.update_position()
+
+            self.draw_blocks(blockPosition)
 
             py.draw.circle(self.screen, (0, 0, 0), (self.player.x, int(self.player.y / 10)), 10)
             py.draw.rect(self.screen, (0, 0, 0), [0, 800, self.window_size[0], 100])

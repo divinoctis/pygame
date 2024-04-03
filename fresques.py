@@ -14,7 +14,7 @@ class Player:
         if keys[py.K_q]:
             self.x -= 5
         if keys[py.K_z] and self.y == 7900:
-            self.speed = -70
+            self.speed = -80
             self.jumped = True
 
     def update_position(self):
@@ -32,24 +32,25 @@ class Game:
         self.window_size = [1600, 900]
         self.clock = py.time.Clock()
         self.screen = py.display.set_mode(self.window_size)
-        self.background = py.image.load("BG.png").convert()
+        self.background = py.image.load("caveBG.png").convert()
         self.background = py.transform.scale(self.background, (1600, 900))
         self.player = Player(30, 7900)
 
-    def draw_blocks(self, block_positions):
-        for pos in block_positions:
-            py.draw.rect(self.screen, (0, 0, 0), pos)
+    def draw_blocks(self, blockPosition):
+        for pos in blockPosition:
+            py.draw.rect(self.screen, (255, 0, 0), pos)
 
     def run(self):
         finished = False
-        block_positions = [[100, 750, 50, 50], [300, 700, 50, 50], [500, 650, 50, 50]]  # Example block positions
+        blockPosition = [[290, 400, 250, 400], [690, 400, 250, 400], [1090, 400, 250, 400]]
+
         while not finished:
             self.screen.blit(self.background, (0, 0))
             keys = py.key.get_pressed()
             self.player.move(keys)
             self.player.update_position()
 
-            self.draw_blocks(block_positions)
+            self.draw_blocks(blockPosition)
 
             py.draw.circle(self.screen, (0, 0, 0), (self.player.x, int(self.player.y / 10)), 10)
             py.draw.rect(self.screen, (0, 0, 0), [0, 800, self.window_size[0], 100])

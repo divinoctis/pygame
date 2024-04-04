@@ -2,7 +2,7 @@ import pygame as py
 
 WIDTH = 1600
 HEIGHT = 900
-BACKGROUND = (0, 0, 0)
+BACKGROUND = (0, 128, 0)
 py.display.set_caption("GEODYSSEY")
 
 class Sprite(py.sprite.Sprite):
@@ -20,9 +20,9 @@ class Ground(Sprite):
         super().__init__("ground.jpg", startx, starty)
 
 class Player(Sprite):
-    def __init_(self, startx, starty):
+    def __init__(self, startx, starty):
         super().__init__("circle.png", startx, starty)
-
+        self.image = py.transform.scale(self.image, (1500, 1500))
         self.speed = 5
         self.jump = 10
         self.verticalSpeed = 0
@@ -34,11 +34,14 @@ class Player(Sprite):
 
         key = py.key.get_pressed()
         if key[py.K_q]:
-            horizontalSpeed = self.speed
+            horizontalSpeed = -self.speed
         elif key[py.K_d]:
             horizontalSpeed = self.speed
-        
+
         if key[py.K_z] and onGround:
+            self.verticalSpeed = -self.jump
+
+        if self.verticalSpeed < 10 and not onGround:
             self.verticalSpeed += self.gravity
         
         if self.verticalSpeed > 0 and onGround:
@@ -69,11 +72,11 @@ def main():
     py.init()
     screen = py.display.set_mode((WIDTH, HEIGHT))
     clock = py.time.Clock()
-    player = Player(100, 200) # ERREUR ICI
+    player = Player(100, 200)
     ground = py.sprite.Group()
 
-    for bx in range(0, 600, 32):
-        ground.add(Ground(bx, 300))
+    for bx in range(0, 800, 32):
+        ground.add(Ground(bx, 1100))
 
     while run:
         py.event.pump()

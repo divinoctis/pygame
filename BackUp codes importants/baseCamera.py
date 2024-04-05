@@ -1,3 +1,5 @@
+# CODE DE LA BASE DE CAMERA. TROUVE SUR GITHUB.     https://github.com/Imranalam28/scrolling-camera-in-pygame
+
 import pygame
 
 # Initialize Pygame

@@ -1,3 +1,5 @@
+# CODE POUR TESTER LES COLLISIONS.
+
 import pygame
 import sys
 

@@ -1,3 +1,5 @@
+# CE CODE CORRESPONDRAIT AU DEBUT DU JEU.
+
 import pygame as py
 
 class Player:
@@ -41,7 +43,7 @@ class Game:
         self.windowSize = [1600, 900]
         self.clock = py.time.Clock()
         self.screen = py.display.set_mode(self.windowSize)
-        self.background = py.image.load("caveBG.png").convert()
+        self.background = py.image.load("IMAGES\caveBG.png").convert()
         self.background = py.transform.scale(self.background, (1600, 900))
         self.player = Player(30, 7900)
         self.camera = Camera(self.windowSize[0], self.windowSize[1])
@@ -50,9 +52,14 @@ class Game:
         for pos in blockPosition:
             py.draw.rect(self.screen, (255, 0, 0), pos)
 
+    def draw_platform(self, platformPos): # ++
+        for pos in platformPos:
+            py.draw.rect(self.screen, (255, 255, 255), pos)
+
     def run(self):
         finished = False
         blockPosition = [[290, 400, 250, 400], [690, 400, 250, 400], [1090, 400, 250, 400]]
+        platformPos = [[1600, 760, 40, 40]]
 
         while not finished:
             self.screen.blit(self.background, (0, 0))
@@ -61,7 +68,8 @@ class Game:
             self.player.update_position()
             self.camera.update_offset(self.player.x, 0)
 
-            self.draw_blocks([[pos[0] + self.camera.camera_offset_x, pos[1], pos[2], pos[3]] for pos in blockPosition])
+            self.draw_blocks([[pos[0] + self.camera.camera_offset_x, pos[1], pos[2], pos[3]] for pos in blockPosition]) # camera block rouges
+            self.draw_platform([[pos[0] + self.camera.camera_offset_x, pos[1], pos[2], pos[3]] for pos in platformPos]) # camera block blancs
 
             py.draw.circle(self.screen, (0, 0, 0), (self.player.x + self.camera.camera_offset_x, int(self.player.y / 10)), 10)
             py.draw.rect(self.screen, (0, 0, 0), [0, 800, self.windowSize[0], 100])

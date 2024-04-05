@@ -1,3 +1,5 @@
+# CODE OBSOLETE.
+
 import pygame as py
 
 class Player:

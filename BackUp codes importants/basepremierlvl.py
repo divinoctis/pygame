@@ -34,7 +34,7 @@ class Game:
         self.windowSize = [1600, 900]
         self.clock = py.time.Clock()
         self.screen = py.display.set_mode(self.windowSize)
-        self.background = py.image.load("BG.png").convert()
+        self.background = py.image.load("IMAGES\BG.png").convert()
         self.background = py.transform.scale(self.background, (1600, 900))
         self.player = Player(30, 7900)
 

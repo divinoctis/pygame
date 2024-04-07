@@ -1,3 +1,5 @@
+# CE CODE CORRESPONDRAIT AU DEBUT DU JEU.
+
 import pygame as py
 
 class Player:
@@ -41,7 +43,7 @@ class Game:
         self.windowSize = [1600, 900]
         self.clock = py.time.Clock()
         self.screen = py.display.set_mode(self.windowSize)
-        self.background = py.image.load("IMAGES\caveBG.png").convert()
+        self.background = py.image.load("IMAGES\BG.png").convert()
         self.background = py.transform.scale(self.background, (1600, 900))
         self.player = Player(30, 7900)
         self.camera = Camera(self.windowSize[0], self.windowSize[1])

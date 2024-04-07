@@ -36,7 +36,6 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, platforms):
 
-
         if self.jump:
             self.vel_y += 0.5
             if self.rect.y + self.vel_y >= self.SCREEN_HEIGHT - 30:

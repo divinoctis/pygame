@@ -43,9 +43,9 @@ class Player(pygame.sprite.Sprite):
                 self.jump = False
             else:
                 self.rect.y += self.vel_y
-        self.rect.y += 5
+
         platform_collision = pygame.sprite.spritecollideany(self, platforms)
-        self.rect.y -= 5
+
 
         if platform_collision:
             if self.vel_y > 0:
@@ -55,6 +55,9 @@ class Player(pygame.sprite.Sprite):
             elif self.vel_y < 0:
                 self.rect.top = platform_collision.rect.bottom
                 self.vel_y = 0
+        elif not platform_collision and self.jump == False:
+            self.rect.y += 5
+
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:

@@ -8,7 +8,7 @@ pygame.display.set_caption("HELL NAH BRUV")
 
 class Sprite(pygame.sprite.Sprite):
     def __init__(self, image, startx, starty):
-        super().__init__()  # super() appelle le parent (ici pygame.sprite.Sprite). On peut aussi Ã©crire la ligne
+        super().__init__()  # super() appelle le parent (ici pygame.sprite.Sprite). On peut aussi écrire la ligne
         # pygame.sprite.Sprite.__init__()
 
         self.image = pygame.image.load(image)
@@ -25,12 +25,12 @@ class Sprite(pygame.sprite.Sprite):
 
 class Sol(Sprite):
     def __init__(self, startx, starty):
-        super().__init__("sol.png", startx, starty)
+        super().__init__("IMAGES\BG.png", startx, starty)
 
 
 class Soul(Sprite):
     def __init__(self, startx, starty):
-        super().__init__("soul.png", startx, starty)
+        super().__init__("CHARACTERS\IndianaJones.png", startx, starty)
 
 
 class Score:
@@ -54,7 +54,7 @@ class Score:
 
 class Player(Sprite):
     def __init__(self, startx, starty):
-        super().__init__("miku idle1.png", startx, starty)  # super appelle Sprite
+        super().__init__("CHARACTERS\IndianaJones.png", startx, starty)  # super appelle Sprite
 
         self.speed = 5
         self.jumpForce = 10

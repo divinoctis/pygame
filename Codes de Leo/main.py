@@ -28,10 +28,8 @@ button = Button(450, SCREEN_HEIGHT - 250)
 all_sprites.add(button)
 buttons.add(button)
 
-
 door = Door(750, SCREEN_HEIGHT - 120)
 all_sprites.add(door)
-
 
 player = Player(50, SCREEN_HEIGHT - 50,)
 all_sprites.add(player)

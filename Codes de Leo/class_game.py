@@ -112,7 +112,7 @@ class menu:
         size = [200, 50]
         self.rect = pygame.Rect((50, 150 +(100 * Y)),size)
         self.circl = 50, 175 +(100 * Y)
-        textp =["play", "setings", "credi", "quit"]
+        textp =["play", "settings", "credits", "exit"]
         self.text =  textp[Y]
 
     def startmenu(self, win,sizefont):

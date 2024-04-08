@@ -34,7 +34,9 @@ all_sprites.add(door)
 player = Player(50, SCREEN_HEIGHT - 50,)
 all_sprites.add(player)
 
+windowSize = [800, 600]
 camera_offset_x = 0
+camera = Camera(windowSize[0], windowSize[1])
 
 startMenu = True
 
@@ -59,6 +61,7 @@ while 1:
         detectQuit()
         menuinstance.drawfont(screen)
         menuB0.startmenu(screen,sizefont)
+        startmenu([[pos[0] + camera.camera_offset_x, pos[1], pos[2], pos[3]] for pos in blockPosition]) #### à modifer jsp
 
         pos = pygame.mouse.get_pos()
         if menuB0.is_hover(pos):

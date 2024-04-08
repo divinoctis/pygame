@@ -34,8 +34,6 @@ all_sprites.add(door)
 player = Player(50, SCREEN_HEIGHT - 50,)
 all_sprites.add(player)
 
-camera_offset_x = 0
-
 startMenu = True
 
 FPS = 60
@@ -100,9 +98,6 @@ while 1:
 
     #update
     player.update(platforms)
-
-    camera_offset_x = SCREEN_WIDTH // 2 - player.rect.x - player.rect.width // 2
-
     # draw
 
     screen.fill(BLACK)

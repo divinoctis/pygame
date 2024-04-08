@@ -8,14 +8,10 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 
-class Camera:
-    def __init__(self, width, height):
-        self.WINDOW_WIDTH = width
-        self.WINDOW_HEIGHT = height
-        self.camera_offset_x = 0
-
-    def update_offset(self, player_x, player_width):
-        self.camera_offset_x = self.WINDOW_WIDTH // 2 - player_x - player_width // 2
+class Camera: #### A FAIRE ####
+    def __init__(self):
+        self.camX = 0
+        self.camY = 0
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):

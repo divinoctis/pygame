@@ -3,8 +3,6 @@ import random
 import sys
 from class_game import*
 
-pygame.init()
-
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -15,119 +13,129 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
-
-all_sprites = pygame.sprite.Group()
-platforms = pygame.sprite.Group()
-buttons = pygame.sprite.Group()
-
-ground = Platform(0, SCREEN_HEIGHT - 20, SCREEN_WIDTH, 20)
-all_sprites.add(ground)
-platforms.add(ground)
-
-button = Button(450, SCREEN_HEIGHT - 250)
-all_sprites.add(button)
-buttons.add(button)
-
-door = Door(750, SCREEN_HEIGHT - 120)
-all_sprites.add(door)
-
-player = Player(50, SCREEN_HEIGHT - 50,)
-all_sprites.add(player)
-
-# camera_offset_x = 0
-
-startMenu = True
-
 FPS = 60
 dtTarget = 1000/FPS
 dt = 0
 
-menuinstance = menu(0)
-imagemenu = pygame.image.load("IMAGES\BG.png") #REMETTRE "back.jpg" POUR LE FINAL
-menuB0 = menu(0)
-sizefont = 24
+class Game:
+    def __init__(self):
+        pygame.init()
 
-lianes = liane()
+        self.running = True
+        self.all_sprites = pygame.sprite.Group()
+        self.platforms = pygame.sprite.Group()
+        self.buttons = pygame.sprite.Group()
 
-platform = Platform(0, 590,800,100)
-all_sprites.add(platform)
-platforms.add(platform)
+        self.ground = Platform(0, SCREEN_HEIGHT - 20, SCREEN_WIDTH, 20, self)
+        self.all_sprites.add(self.ground)
+        self.platforms.add(self.ground)
 
-for i in range(4):
-    platform = Platform(50 + i * 100, SCREEN_HEIGHT - 100 - i * 50, 100, 20)
-    all_sprites.add(platform)
-    platforms.add(platform)
+        self.button = Button(450, SCREEN_HEIGHT - 250, self)
+        self.all_sprites.add(self.button)
+        self.buttons.add(self.button)
 
-coordonateliane = lianes.getcoordonate()
-onlian=False
-while 1:
-    #menu
-    while startMenu :
-        screen.blit(menuinstance.imageMenu, (0, 0))
-        detectQuit()
-        menuinstance.drawfont(screen)
-        menuB0.startmenu(screen,sizefont)
+        self.door = Door(750, SCREEN_HEIGHT - 120, self)
+        self.all_sprites.add(self.door)
 
-        pos = pygame.mouse.get_pos()
-        if menuB0.is_hover(pos):
-            menuB0.color = menuB0.hovercColor
-            for evenement in pygame.event.get():
-                if evenement.type == pygame.MOUSEBUTTONDOWN:
-                    menuB0.click()
-                    startMenu = False
-        else:
-            menuB0.color = (175,175,175,0)
+        self.player = Player(50, SCREEN_HEIGHT - 50, self)
+        self.all_sprites.add(self.player)
+
+        self.camera_offset_x = 0
+
+        self.startMenu = True
+
+        self.menuinstance = menu(0)
+        self.imagemenu = pygame.image.load("IMAGES\BG.png") #REMETTRE "back.jpg" POUR LE FINAL
+        self.menuB0 = menu(0)
+        self.sizefont = 24
+
+        self.lianes = liane(self)
+
+        self.platform = Platform(0, 590,800,100, self)
+        self.all_sprites.add(self.platform)
+        self.platforms.add(self.platform)
+
+        self.coordonateliane = self.lianes.getcoordonate()
+        self.onlian=False
+
+        for i in range(4):
+            self.platform = Platform(50 + i * 100, SCREEN_HEIGHT - 100 - i * 50, 100, 20, self)
+            self.all_sprites.add(self.platform)
+            self.platforms.add(self.platform)
+
+    def draw(self):
+        screen.fill(BLACK)
+
+        for sprite in self.all_sprites:
+            sprite.draw(screen)
+
+        self.lianes.draw(screen)
+
         pygame.display.flip()
 
-    detectQuit()
+    def update(self):
 
-    #game loop
-    TickStart = pygame.time.get_ticks()
+        #game loop
+        self.TickStart = pygame.time.get_ticks()
 
-    screen.fill(BLACK)
+        #event
 
-    #event
+        hits = pygame.sprite.spritecollide(self.player, self.buttons, False)
+        self.veriflian = pygame.key.get_pressed()
 
-    hits = pygame.sprite.spritecollide(player, buttons, False)
-    veriflian = pygame.key.get_pressed()
+        if self.veriflian[pygame.K_e] or self.onlian == True:
+            self.onlian = self.player.liane(self.coordonateliane)
 
-    if veriflian[pygame.K_e] or onlian == True:
-        onlian = player.liane(coordonateliane)
+        if self.onlian == True:
+            self.player.moveliane()
 
-    if onlian == True:
-        player.moveliane()
+        if not self.onlian :
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_SPACE]:
+                self.player.jump_action()
 
+            if hits:
+                self.button.activate()
+                self.door.open()
 
+        #update
+            self.player.update(self.platforms)
 
+        self.camera_offset_x = SCREEN_WIDTH // 2 - self.player.rect.x - self.player.rect.width // 2
 
+        # draw
 
-    if not onlian :
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE]:
-            player.jump_action()
+    def run(self):
+        while self.running :
+            self.update()
+            self.draw()
 
-        if hits:
-            button.activate()
-            door.open()
+            TickEnd = pygame.time.get_ticks()
+            dt = TickEnd - self.TickStart
+            if (dt< dtTarget):
+                pygame.time.wait(int(dtTarget - dt))
+                dt = dtTarget
 
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.running = False
 
-    #update
-        player.update(platforms)
+            while self.startMenu :
+                screen.blit(self.menuinstance.imageMenu, (0, 0))
+                detectQuit()
+                self.menuinstance.drawfont(screen)
+                self.menuB0.startmenu(screen,self.sizefont)
 
-    # camera_offset_x = SCREEN_WIDTH // 2 - player.rect.x - player.rect.width // 2
+                pos = pygame.mouse.get_pos()
+                if self.menuB0.is_hover(pos):
+                    self.menuB0.color = self.menuB0.hovercColor
+                    for evenement in pygame.event.get():
+                        if evenement.type == pygame.MOUSEBUTTONDOWN:
+                            self.menuB0.click()
+                            self.startMenu = False
+                else:
+                    self.menuB0.color = (175,175,175,0)
+                pygame.display.flip()
 
-    # draw
-
-    screen.fill(BLACK)
-    lianes.draw(screen)
-    all_sprites.draw(screen)
-
-
-    pygame.display.flip()
-
-    TickEnd = pygame.time.get_ticks()
-    dt = TickEnd - TickStart
-    if (dt< dtTarget):
-        pygame.time.wait(int(dtTarget - dt))
-        dt = dtTarget
-
+g = Game()
+g.run()

@@ -27,19 +27,19 @@ scroll_right = False
 scroll = 0
 scroll_speed = 1
 
-pine1_img = pygame.image.load('background/pine1.png').convert_alpha()
-pine2_img = pygame.image.load('background/pine2.png').convert_alpha()
-mountain_img = pygame.image.load('background/mountain.png').convert_alpha()
-sky_img = pygame.image.load('background/sky_cloud.png').convert_alpha()
+pine1_img = pygame.image.load('Codes de Eric\pine1.png').convert_alpha()
+pine2_img = pygame.image.load('Codes de Eric\pine2.png').convert_alpha()
+mountain_img = pygame.image.load('Codes de Eric\mountain.png').convert_alpha()
+sky_img = pygame.image.load('Codes de Eric\sky_cloud.png').convert_alpha()
 
 img_list = []
 for x in range(TILE_TYPES):
-	img = pygame.image.load(f'tile/{x}.png').convert_alpha()
+	img = pygame.image.load(f'Codes de Eric\tile\{x}.png').convert_alpha()
 	img = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
 	img_list.append(img)
 
-save_img = pygame.image.load('save_btn.png').convert_alpha()
-load_img = pygame.image.load('load_btn.png').convert_alpha()
+save_img = pygame.image.load('Codes de Eric\save_btn.png').convert_alpha()
+load_img = pygame.image.load('Codes de Eric\load_btn.png').convert_alpha()
 
 GREEN = (144, 201, 120)
 WHITE = (255, 255, 255)

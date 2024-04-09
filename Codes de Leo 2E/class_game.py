@@ -11,10 +11,15 @@ BLUE = (0, 0, 255)
 
 class Camera:
     def __init__(self, width, height):
-        # à faire
+        self.WINDOW_WIDTH = width
+        self.WINDOW_HEIGHT = height
+        self.camera_offset_x = 0
+
+    def update_offset(self, player_x, player_width):
+        self.camera_offset_x = self.WINDOW_WIDTH // 2 - player_x - player_width // 2
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x, y, game):
         super().__init__()
         self.image = pygame.Surface((30, 30))
         self.image.fill(RED)
@@ -26,6 +31,10 @@ class Player(pygame.sprite.Sprite):
         self.SCREEN_HEIGHT = y +50
         self.speedup = 0.5
         self.onliane = False
+        self.game = game
+
+    def draw(self, screen):
+        screen.blit(self.image, (self.rect.x + self.game.camera_offset_x, self.rect.y))
 
     def jump_action(self):
         if not self.jump:
@@ -72,8 +81,6 @@ class Player(pygame.sprite.Sprite):
         else :
             return False
 
-
-
     def moveliane(self):
         keys = pygame.key.get_pressed()
 
@@ -87,16 +94,20 @@ class Player(pygame.sprite.Sprite):
             self.rect.y += 5
 
 class Platform(pygame.sprite.Sprite):
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y, width, height, game):
         super().__init__()
         self.image = pygame.Surface((width, height))
         self.image.fill(WHITE)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.game = game
+
+    def draw(self, screen):
+        screen.blit(self.image, (self.rect.x + self.game.camera_offset_x, self.rect.y))
 
 class Button(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x, y, game):
         super().__init__()
         self.inactive_image = pygame.Surface((50, 20))
         self.inactive_image.fill(BLUE)
@@ -107,13 +118,17 @@ class Button(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         self.active = False
+        self.game = game
+
+    def draw(self,screen):
+        screen.blit(self.image, (self.rect.x + self.game.camera_offset_x, self.rect.y))  
 
     def activate(self):
         self.active = True
         self.image = self.active_image
 
 class Door(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x, y, game):
         super().__init__()
         self.image = pygame.Surface((30, 60))
         self.image.fill(RED)
@@ -121,6 +136,10 @@ class Door(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         self.closed = True
+        self.game = game
+
+    def draw(self, screen):
+        screen.blit(self.image, (self.rect.x + self.game.camera_offset_x, self.rect.y))
 
     def open(self):
         self.closed = False
@@ -138,6 +157,9 @@ class menu:
         self.circl = 50, 175 +(100 * Y)
         textp =["play", "settings", "credits", "exit"]
         self.text =  textp[Y]
+
+    def draw(self, screen):
+        screen.blit(self.image, (self.rect.x, self.rect.y))
 
     def startmenu(self, win,sizefont):
         self.font = pygame.font.SysFont("Arial",sizefont)
@@ -165,14 +187,15 @@ def detectQuit():
         exit()
 
 class liane():
-    def __init__(self):
+    def __init__(self, game):
         self.size = [100,300]
         self.pos = [650,275]
         self.rect = pygame.Rect(self.pos, self.size)
         self.coordonate = [self.size,self.pos]
+        self.game = game
 
     def draw(self,screen):
-        pygame.draw.rect(screen,(0,255,0),self.rect)
+        pygame.draw.rect(screen,(0,255,0), (self.rect.x + self.game.camera_offset_x, self.rect.y, self.rect.w, self.rect.h))
 
     def getcoordonate(self):
         print(self.coordonate)

@@ -27,11 +27,9 @@ scroll_right = False
 scroll = 0
 scroll_speed = 1
 
-#pine1_img = pygame.image.load('LevelEditor_Eric/decor/pine1.png').convert_alpha()
-#pine2_img = pygame.image.load('LevelEditor_Eric/decor/pine2.png').convert_alpha()
 mountain_img = pygame.image.load('LevelEditor_Eric/decor/Montagnes.png').convert_alpha()
-mountain_img = pygame.transform.scale(mountain_img, (800,200))
-sky_img = pygame.image.load('IMAGES/BG.png').convert_alpha()
+mountain_img = pygame.transform.scale(mountain_img, (800,500))
+sky_img = pygame.image.load('LevelEditor_Eric/decor/sky_cloud.png').convert_alpha()
 
 img_list = []
 for x in range(TILE_TYPES):
@@ -62,13 +60,11 @@ def draw_text(text, font, text_col, x, y):
 
 def draw_bg():
 	screen.fill(GREEN)
-	width = sky_img.get_width()
+	width = sky_img.get_width() 
 	width2 = mountain_img.get_width()
 	for x in range((SCREEN_WIDTH + SIDE_MARGIN) // width2 + 1):
 		screen.blit(sky_img, ((x * width) - scroll * 0.5, 0))
-		screen.blit(mountain_img, ((x-1) * width2, SCREEN_HEIGHT - mountain_img.get_height() - 300))
-		#screen.blit(pine1_img, ((x * width) - scroll * 0.7, SCREEN_HEIGHT - pine1_img.get_height() - 150))
-		#screen.blit(pine2_img, ((x * width) - scroll * 0.8, SCREEN_HEIGHT - pine2_img.get_height()))
+		screen.blit(mountain_img, ((x-1) * width2, SCREEN_HEIGHT - mountain_img.get_height() - 30))
 
 def draw_grid():
 

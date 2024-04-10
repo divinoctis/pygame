@@ -40,9 +40,9 @@ for x in range(TILE_TYPES):
 save_img = pygame.image.load('LevelEditor_Eric/decor/save_btn.png').convert_alpha()
 load_img = pygame.image.load('LevelEditor_Eric/decor/load_btn.png').convert_alpha()
 
-GREEN = (144, 201, 120)
+OLIVE = (155, 154, 90)
 WHITE = (255, 255, 255)
-RED = (200, 25, 25)
+DARKOLIVE = (85,107,47)
 
 font = pygame.font.SysFont('Futura', 30)
 
@@ -59,7 +59,7 @@ def draw_text(text, font, text_col, x, y):
 	screen.blit(img, (x, y))
 
 def draw_bg():
-	screen.fill(GREEN)
+	screen.fill(OLIVE)
 	width = sky_img.get_width() 
 	width2 = mountain_img.get_width()
 	for x in range((SCREEN_WIDTH + SIDE_MARGIN) // width2 + 1):
@@ -122,7 +122,7 @@ while run:
 				for y, tile in enumerate(row):
 					world_data[x][y] = int(tile)
 
-	pygame.draw.rect(screen, GREEN, (SCREEN_WIDTH, 0, SIDE_MARGIN, SCREEN_HEIGHT))
+	pygame.draw.rect(screen, OLIVE, (SCREEN_WIDTH, 0, SIDE_MARGIN, SCREEN_HEIGHT))
 
 
 	button_count = 0
@@ -130,7 +130,7 @@ while run:
 		if i.draw(screen):
 			current_tile = button_count
 
-	pygame.draw.rect(screen, RED, button_list[current_tile].rect, 3)
+	pygame.draw.rect(screen, DARKOLIVE, button_list[current_tile].rect, 3)
 
 
 	if scroll_left == True and scroll > 0:

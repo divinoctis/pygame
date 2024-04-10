@@ -305,7 +305,6 @@ class liane():
     def getcoordonate(self):
         return self.coordonate
 
-
 class tprect():
     def __init__(self, game):
         self.postp = [10, 500]

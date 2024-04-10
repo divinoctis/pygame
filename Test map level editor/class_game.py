@@ -321,7 +321,7 @@ class tprect():
 
     def draw(self, screen):
         pygame.draw.rect(screen, self.colortp,
-                         (self.recttp[0] + self.game.camera_offset_x, self.recttp[1], self.recttp.w, self.recttp.h))
+                        (self.recttp[0] + self.game.camera_offset_x, self.recttp[1], self.recttp.w, self.recttp.h))
         pygame.draw.rect(screen, self.colortarget, (
             self.recttarget[0] + self.game.camera_offset_x, self.recttarget[1], self.recttarget.w, self.recttarget.h))
 

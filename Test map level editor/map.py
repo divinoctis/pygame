@@ -1,5 +1,7 @@
 import pygame
 
+### code qui sert à rien LMFAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO go pleurer
+
 class Map:
     def __init__(self, map_data):
         self.map_data = map_data

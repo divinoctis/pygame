@@ -19,7 +19,7 @@ pygame.display.set_caption('Level Editor')
 ROWS = 16
 MAX_COLS = 150
 TILE_SIZE = SCREEN_HEIGHT // ROWS
-TILE_TYPES = 19
+TILE_TYPES = 7 # nombre à changer en fonction du nombre de pièces environnement (+1 vu que ça part de 0)
 level = 0
 current_tile = 0
 scroll_left = False
@@ -34,7 +34,7 @@ sky_img = pygame.image.load('IMAGES/BG.png').convert_alpha()
 
 img_list = []
 for x in range(TILE_TYPES):
-	img = pygame.image.load(f'LevelEditor_Eric/tile/{x}.png').convert_alpha()
+	img = pygame.image.load(f'Assets/Environnement/{x}.png').convert_alpha() #LevelEditor_Eric/tile/{x}.png
 	img = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
 	img_list.append(img)
 

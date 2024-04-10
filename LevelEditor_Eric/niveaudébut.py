@@ -3,6 +3,8 @@ import button
 import csv
 import pickle
 
+############### DEBUT NIVEAU AVEC TENTES, CAMP, ETC ###############
+
 pygame.init()
 
 clock = pygame.time.Clock()

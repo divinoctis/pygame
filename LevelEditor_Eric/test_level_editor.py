@@ -29,7 +29,7 @@ scroll_speed = 1
 
 mountain_img = pygame.image.load('LevelEditor_Eric/decor/Montagnes.png').convert_alpha()
 mountain_img = pygame.transform.scale(mountain_img, (800,500))
-sky_img = pygame.image.load('LevelEditor_Eric/decor/sky_cloud.png').convert_alpha()
+sky_img = pygame.image.load('LevelEditor_Eric/decor/Ciel.png').convert_alpha()
 
 img_list = []
 for x in range(TILE_TYPES):

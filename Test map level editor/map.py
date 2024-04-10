@@ -1,6 +1,53 @@
 import pygame
 
-miniMap = [
+### code qui sert à rien LMFAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO go pleurer
+
+class Map:
+    def __init__(self, map_data):
+        self.map_data = map_data
+        self.width = 50
+        self.height = len(map_data) // self.width
+        self.terrain_images = {
+            1: pygame.image.load('Assets/Environnement/1.png'),
+            2: pygame.image.load('Assets/Environnement/2.png'),
+            10: pygame.image.load('Assets/Environnement/10.png'),
+            11: pygame.image.load('Assets/Environnement/11.png'),
+            19: pygame.image.load('Assets/Environnement/19.png'),
+            20: pygame.image.load('Assets/Environnement/20.png'),
+            21: pygame.image.load('Assets/Environnement/21.png'),
+            22: pygame.image.load('Assets/Environnement/22.png'),
+            23: pygame.image.load('Assets/Environnement/23.png'),
+            24: pygame.image.load('Assets/Environnement/24.png'),
+            25: pygame.image.load('Assets/Environnement/25.png'),
+        }
+
+    def display_map(self, screen):
+        for y in range(self.height):
+            for x in range(self.width):
+                tile_index = self.map_data[y * self.width + x]
+                if tile_index in self.terrain_images:
+                    screen.blit(self.terrain_images[tile_index], (x * 20, y * 20))
+
+class Player: 
+    def __init__(self, x, y, map_obj):
+        self.x = x
+        self.y = y
+        self.map_obj = map_obj
+
+    def move(self, dx, dy):
+        new_x = self.x + dx
+        new_y = self.y + dy
+
+        if self.map_obj.map_data[new_y][new_x]!= '-1':
+            self.x = new_x
+            self.y = new_y
+
+    def display_position(self, screen):
+        pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(self.x * 20, self.y * 20, 20, 20))
+
+def main():
+    pygame.init()
+    map_data = [
     -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
     -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,2,2,2,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
     -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,2,2,2,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
@@ -18,22 +65,32 @@ miniMap = [
     -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,25,20,23,23,23,23,23,23,23,23,23,23,23,23,23,21,21,21,21,21,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
     10,11,10,11,10,11,10,11,11,10,10,10,11,11,10,11,11,10,10,11,10,11,11,11,10,11,10,10,11,10,10,10,11,10,10,11,11,10,11,10,11,10,10,10,11,10,10,10,11,11,10,11,10,10,11,11,11,11,10,10,11,10,11,10,10,10,11,11,11,10,10,11,11,10,11,10,10,10,10,11,10,11,10,10,10,11,11,11,11,11,10,11,10,11,11,11,10,11,10,10,11,10,10,10,11,11,11,11,10,10,10,11,11,11,11,10,10,10,10,11,11,10,10,11,10,10,11,11,11,10,10,11,11,10,10,11,11,11,11,10,11,10,10,10,10,10,10,11,11,11,
 ]
+    
+    map_obj = Map(map_data)
+    player = Player(0, 0, map_obj)
 
-class Map:
-    def __init__(self, game):
-        self.game = game
-        self.miniMap = miniMap
-        self.world_map = {}
-        self.rows = len(self.miniMap)
-        self.cols = len(self.miniMap[0])
-        self.get_map()
+    screen = pygame.display.set_mode((640, 480))
 
-    def get_map(self):
-        for j, row in enumerate(self.miniMap):
-            for i, value in enumerate(row):
-                if value:
-                    self.world_map[(i, j)] = value
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
 
-    def draw(self):
-        [pygame.draw.rect(self.game.screen, 'darkgray', (pos[0] * 100, pos[1] * 100, 100, 100), 2)
-         for pos in self.world_map]
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_z]:
+            player.move(0, -1)
+        if keys[pygame.K_s]:
+            player.move(0, 1)
+        if keys[pygame.K_q]:
+            player.move(-1, 0)
+        if keys[pygame.K_d]:
+            player.move(1, 0)
+
+        screen.fill((0, 0, 0))
+        map_obj.display_map(screen)
+        player.display_position(screen)
+        pygame.display.flip()
+
+if __name__ == "__main__":
+    main()

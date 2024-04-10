@@ -33,7 +33,7 @@ sky_img = pygame.image.load('LevelEditor_Eric/decor/Ciel.png').convert_alpha()
 
 img_list = []
 for x in range(TILE_TYPES):
-	img = pygame.image.load(f'Assets/Environnement/{x}.png').convert_alpha() #LevelEditor_Eric/tile/{x}.png
+	img = pygame.image.load(f'Assets/Environnement/{x}.png').convert_alpha()
 	img = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
 	img_list.append(img)
 

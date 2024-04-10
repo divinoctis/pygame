@@ -7,7 +7,7 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("GEODYSSEY")
-pygame.display.set_icon(pygame.image.load("IMAGES/Logo.png"))
+pygame.display.set_icon(pygame.image.load("IMAGES/logo.png"))
 pygame.display.set_caption("indila jaune et les azteque")
 
 WHITE = (255, 255, 255)
@@ -18,8 +18,6 @@ BLUE = (0, 0, 255)
 FPS = 60
 dtTarget = 1000/FPS
 dt = 0
-
-bg = pygame.image.load("LevelEditor_Eric/decor/Ciel.png")
 
 class Game:
     def __init__(self):
@@ -47,7 +45,7 @@ class Game:
         self.startMenu = True
 
         self.menuinstance = menu(0)
-        self.imagemenu = pygame.image.load("IMAGES/GeOdyssey.png") #REMETTRE "back.jpg" POUR LE FINAL
+        self.imagemenu = pygame.image.load("IMAGES/BG.png") #REMETTRE "back.jpg" POUR LE FINAL
         self.menuB0 = menu(0)
         self.sizefont = 24
         self.pause = False
@@ -70,6 +68,7 @@ class Game:
             self.platforms.add(self.platform)
 
     def draw(self):
+        screen.fill(BLACK)
         self.player.drawlife(screen)
         self.lianes.draw(screen)
         self.tp.draw(screen)
@@ -82,6 +81,8 @@ class Game:
     def update(self,dt):
 
         #game loop
+
+
         #event
 
         hits = pygame.sprite.spritecollide(self.player, self.buttons, False)
@@ -114,7 +115,7 @@ class Game:
 
         # draw
 
-    def run(self, dt):
+    def run(self,dt):
 
         while self.running :
             TickStart = pygame.time.get_ticks()
@@ -124,7 +125,6 @@ class Game:
                     self.running = False
 
             while self.startMenu :
-                screen.fill((BLACK))
                 screen.blit(self.menuinstance.imageMenu, (0, 0))
                 detectQuit()
                 self.menuinstance.drawfont(screen)
@@ -137,16 +137,12 @@ class Game:
                         if evenement.type == pygame.MOUSEBUTTONDOWN:
                             self.startMenu = False
                 else:
-                    self.menuB0.color = (175,175,175,0)
+                    self.menuB0.color = (189,183,107)
 
                 pygame.display.flip()
 
             if not self.dead:
                 self.player.restart(50, SCREEN_HEIGHT - 50)
-
-            # Draw the background image here
-            if not self.startMenu:
-                screen.blit(bg, (0, 0))
 
             self.update(dt)
             self.draw()

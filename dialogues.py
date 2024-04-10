@@ -12,7 +12,7 @@ font = pygame.font.SysFont('Times New Roman', 25)
 texts = ['Hi', 'Hello', 'Who are ye?', 'Someone']
 text_renders = [font.render(text, True, (0, 0, 255)) for text in texts]
 index = -1
-space_released = True
+a_released = True
 
 while True:
     clock.tick(60)
@@ -32,11 +32,11 @@ while True:
     pygame.draw.rect(screen, (255, 0, 0), player)
 
     if player.colliderect(box):
-        if keys[pygame.K_SPACE] and space_released:
-            space_released = False
+        if keys[pygame.K_a] and a_released:
+            a_released = False
             index = (index + 1) if (index + 1) != len(text_renders) else 0
-        elif not keys[pygame.K_SPACE]:
-            space_released = True
+        elif not keys[pygame.K_a]:
+            a_released = True
     else:
         index = -1
 

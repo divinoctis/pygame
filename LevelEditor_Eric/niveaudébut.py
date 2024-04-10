@@ -13,12 +13,15 @@ SCREEN_HEIGHT = 640
 LOWER_MARGIN = 100
 SIDE_MARGIN = 300
 
+
 screen = pygame.display.set_mode((SCREEN_WIDTH + SIDE_MARGIN, SCREEN_HEIGHT + LOWER_MARGIN))
 pygame.display.set_caption('Level Editor')
 
 ROWS = 16
-MAX_COLS = 150
+MAX_COLS = 80 #valeur pour la taille
 TILE_SIZE = SCREEN_HEIGHT // ROWS
+SELECTED_TILE_SIZE = TILE_SIZE // 3
+
 TILE_TYPES = 26 # nombre à changer en fonction du nombre de pièces environnement (+1 vu que ça part de 0)
 level = 0
 current_tile = 0
@@ -40,6 +43,8 @@ for x in range(TILE_TYPES):
 	img = pygame.image.load(f'Assets/Environnement/{x}.png').convert_alpha()
 	img = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
 	img_list.append(img)
+
+img_list_copy = [pygame.transform.scale(img, (SELECTED_TILE_SIZE, SELECTED_TILE_SIZE)) for img in img_list]
 
 save_img = pygame.image.load('LevelEditor_Eric/decor/save_btn.png').convert_alpha()
 load_img = pygame.image.load('LevelEditor_Eric/decor/load_btn.png').convert_alpha()
@@ -78,14 +83,13 @@ def draw_bg():
 	for x in range((SCREEN_WIDTH + SIDE_MARGIN) // width2 + 1): 
 		screen.blit(deuxiemescene, ((x * width) - scroll * 0.5 + SCREEN_WIDTH, 0)) # image de fond pour la deuxieme scène
 
-
 def draw_grid():
+    for c in range(MAX_COLS):
+        pygame.draw.line(screen, WHITE, (c * TILE_SIZE - scroll, 0), (c * TILE_SIZE - scroll, SCREEN_HEIGHT))
 
-	for c in range(MAX_COLS + 1):
-		pygame.draw.line(screen, WHITE, (c * TILE_SIZE - scroll, 0), (c * TILE_SIZE - scroll, SCREEN_HEIGHT))
+    for c in range(ROWS + 1):
+        pygame.draw.line(screen, WHITE, (0, c * TILE_SIZE), (SCREEN_WIDTH, c * TILE_SIZE))
 
-	for c in range(ROWS + 1):
-		pygame.draw.line(screen, WHITE, (0, c * TILE_SIZE), (SCREEN_WIDTH, c * TILE_SIZE))
 
 def draw_world():
 	for y, row in enumerate(world_data):
@@ -100,10 +104,10 @@ button_list = []
 button_col = 0
 button_row = 0
 for i in range(len(img_list)):
-	tile_button = button.Button(SCREEN_WIDTH + (75 * button_col) + 50, 75 * button_row + 50, img_list[i], 1)
+	tile_button = button.Button(SCREEN_WIDTH + (25 * button_col) + 50, 25 * button_row + 50, img_list_copy[i], 1)
 	button_list.append(tile_button)
 	button_col += 1
-	if button_col == 3:
+	if button_col == 10:
 		button_row += 1
 		button_col = 0
 
@@ -133,7 +137,10 @@ while run:
 			reader = csv.reader(csvfile, delimiter = ',')
 			for x, row in enumerate(reader):
 				for y, tile in enumerate(row):
-					world_data[x][y] = int(tile)
+					try:
+						world_data[x][y] = int(tile)
+					except:
+						print(str(x) + ";" + str(y) + "=>" + str(len(world_data)) + ";" + str(len(world_data[x])))
 
 	pygame.draw.rect(screen, OLIVE, (SCREEN_WIDTH, 0, SIDE_MARGIN, SCREEN_HEIGHT))
 

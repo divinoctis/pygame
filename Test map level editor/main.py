@@ -24,7 +24,6 @@ bg = pygame.image.load("LevelEditor_Eric/decor/Ciel.png")
 class Game:
     def __init__(self):
         pygame.init()
-        screen.blit(bg, (0, 0))
 
         self.running = True
         self.all_sprites = pygame.sprite.Group()
@@ -71,7 +70,6 @@ class Game:
             self.platforms.add(self.platform)
 
     def draw(self):
-        screen.fill(BLACK)
         self.player.drawlife(screen)
         self.lianes.draw(screen)
         self.tp.draw(screen)
@@ -116,7 +114,7 @@ class Game:
 
         # draw
 
-    def run(self,dt):
+    def run(self, dt):
 
         while self.running :
             TickStart = pygame.time.get_ticks()
@@ -126,6 +124,7 @@ class Game:
                     self.running = False
 
             while self.startMenu :
+                screen.fill((BLACK))
                 screen.blit(self.menuinstance.imageMenu, (0, 0))
                 detectQuit()
                 self.menuinstance.drawfont(screen)
@@ -144,6 +143,10 @@ class Game:
 
             if not self.dead:
                 self.player.restart(50, SCREEN_HEIGHT - 50)
+
+            # Draw the background image here
+            if not self.startMenu:
+                screen.blit(bg, (0, 0))
 
             self.update(dt)
             self.draw()

@@ -43,7 +43,7 @@ while True:
         temp_img -= dt
 
     dt = (pygame.time.get_ticks() - start) / 1000
-    
+
     pygame.display.flip()
 
     pygame.display.update()

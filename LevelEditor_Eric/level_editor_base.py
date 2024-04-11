@@ -18,21 +18,23 @@ screen = pygame.display.set_mode((SCREEN_WIDTH + SIDE_MARGIN, SCREEN_HEIGHT + LO
 pygame.display.set_caption('Level Editor')
 
 ROWS = 16
-MAX_COLS = 150
+MAX_COLS = 175
 TILE_SIZE = SCREEN_HEIGHT // ROWS
 SELECTED_TILE_SIZE = TILE_SIZE // 3
 
-TILE_TYPES = 33 # nombre à changer en fonction du nombre de pièces environnement (+1 vu que ça part de 0)
+TILE_TYPES = 232 # nombre à changer en fonction du nombre de pièces environnement (+1 vu que ça part de 0)
 level = 0
 current_tile = 0
 scroll_left = False
 scroll_right = False
 scroll = 0
-scroll_speed = 1
+scroll_speed = 4
 
 mountain_img = pygame.image.load('LevelEditor_Eric/decor/Montagnes.png').convert_alpha()
 mountain_img = pygame.transform.scale(mountain_img, (800,500))
 sky_img = pygame.image.load('LevelEditor_Eric/decor/Ciel.png').convert_alpha()
+fondTemple = pygame.image.load('LevelEditor_Eric/decor/fondTemple.png').convert_alpha() # Leo, ici c'est l'image de fond du temple, si tu peux améliorer pour que ce soit nickel sur le level editor, fais le. La ligne du dessous permet de redimensionner
+fondTemple = pygame.transform.scale(fondTemple, (1400, 400)) # check LIGNE 75 pour modifier la hauteur du fond
 
 img_list = []
 for x in range(TILE_TYPES):
@@ -70,6 +72,7 @@ def draw_bg():
 	for x in range((SCREEN_WIDTH + SIDE_MARGIN) // width2 + 1):
 		screen.blit(sky_img, ((x * width) - scroll * 0.5, 0))
 		screen.blit(mountain_img, ((x-1) * width2, SCREEN_HEIGHT - mountain_img.get_height() - 30))
+		screen.blit(fondTemple, ((x-1) * width2, SCREEN_HEIGHT - fondTemple.get_height() - 30))
 
 def draw_grid():
 

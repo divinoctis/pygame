@@ -18,7 +18,7 @@ BLACK = (0, 0, 0)
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Jeu avec Pygame")
-
+bg = pygame.image.load("LevelEditor_Eric/decor/Ciel.png")
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -100,6 +100,8 @@ all_sprites.add(player)
 
 running = True
 while running:
+    screen.fill(BLACK)
+    screen.blit(bg, (0, 0))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

@@ -11,6 +11,7 @@ screen_height = 600
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("tentative 305000")
 
+bg = pygame.image.load("LevelEditor_Eric/decor/Ciel.png")
 
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
@@ -67,6 +68,7 @@ running = True
 clock = pygame.time.Clock()
 while running:
     screen.fill(BLACK)
+    screen.blit(bg, (0, 0))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

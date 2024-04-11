@@ -153,7 +153,7 @@ class menu:
         self.hovercColor = (100, 100, 100)
         self.startPosition = [150, 50]
         self.spaceBetwen = [0, 100]
-        self.imageMenu = pygame.image.load("IMAGES\BG.png") #REMETTRE "back.jpg" POUR LE FINAL
+        self.imageMenu = pygame.image.load("LevelEditor_Eric/decor/Ciel.png") #REMETTRE "back.jpg" POUR LE FINAL
         size = [200, 50]
         self.rect = pygame.Rect((50, 150 +(100 * Y)),size)
         self.circl = 50, 175 +(100 * Y)

@@ -6,6 +6,13 @@ pygame.init()
 screen = pygame.display.set_mode((1600, 900))
 clock = pygame.time.Clock()
 
+background = pygame.image.load('IMAGES/fond entier 1.png')
+
+loraCrous = pygame.image.load('Dialogues/LoraCrousG.png').convert()
+loraCrous = pygame.transform.scale(loraCrous, (90, 130))
+daffyDoc = pygame.image.load('Dialogues/DaffyDocD.png').convert()
+daffyDoc = pygame.transform.scale(daffyDoc, (80, 130))
+
 box = pygame.Rect(300, 200, 100, 100)
 player = pygame.Rect(50, 50, 30, 30)
 
@@ -18,6 +25,9 @@ a_released = True
 while True:
     clock.tick(60)
     screen.fill((0, 0, 0))
+    screen.blit(background, (0, 0))
+    screen.blit(loraCrous, (700, 710))
+    screen.blit(daffyDoc, (1000, 710))
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_q]:
@@ -42,7 +52,7 @@ while True:
         index = -1
 
     if index != -1:
-        screen.blit(text_renders[index], (50, 50))
+        screen.blit(text_renders[index], (800, 450))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

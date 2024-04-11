@@ -29,7 +29,7 @@ current_tile = 0
 scroll_left = False
 scroll_right = False
 scroll = 0
-scroll_speed = 3
+scroll_speed = 0.5
 
 mountain_img = pygame.image.load('LevelEditor_Eric/decor/Montagnes.png').convert_alpha()
 mountain_img = pygame.transform.scale(mountain_img, (800,500))
@@ -41,6 +41,9 @@ sky_img = pygame.image.load('LevelEditor_Eric/decor/Ciel.png').convert_alpha()
 
 escaliers = pygame.image.load('LevelEditor_Eric/decor/escalierfinal.png').convert_alpha()
 escaliers = pygame.transform.scale(escaliers, (600, 300))
+
+IndilaJaune = pygame.image.load('Assets/Idle/INDILA JAUNE/Indila Jaune D/INDILA_FRAME_1.png').convert_alpha()
+IndilaJaune = pygame.transform.scale(IndilaJaune, (70, 130))
 
 img_list = []
 for x in range(TILE_TYPES):
@@ -89,6 +92,9 @@ def draw_bg():
 
 	for x in range((SCREEN_WIDTH + SIDE_MARGIN) // width2 + 1): 
 		screen.blit(escaliers, ((x * width) - scroll * 0.5 + SCREEN_WIDTH + 600, 300)) # les escaliers
+
+	for x in range((SCREEN_WIDTH + SIDE_MARGIN) // width2 + 1): 
+		screen.blit(IndilaJaune, ((x * width) - scroll * 0.5 + SCREEN_WIDTH, 470)) # Indila Jaune
 
 # def draw_grid():
 #     for c in range(MAX_COLS):

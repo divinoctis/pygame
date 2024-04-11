@@ -1,7 +1,7 @@
 import pygame
 import random
 
-# à revoir
+# CODE POUR L'IA DU MOB, A AMELIORER.
 
 pygame.init()
 

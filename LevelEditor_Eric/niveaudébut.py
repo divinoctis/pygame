@@ -15,7 +15,6 @@ SCREEN_HEIGHT = 640
 LOWER_MARGIN = 100
 SIDE_MARGIN = 300
 
-
 screen = pygame.display.set_mode((SCREEN_WIDTH + SIDE_MARGIN, SCREEN_HEIGHT + LOWER_MARGIN))
 pygame.display.set_caption('Level Editor')
 
@@ -24,21 +23,27 @@ MAX_COLS = 80 #valeur pour la taille
 TILE_SIZE = SCREEN_HEIGHT // ROWS
 SELECTED_TILE_SIZE = TILE_SIZE // 3
 
-TILE_TYPES = 26 # nombre à changer en fonction du nombre de pièces environnement (+1 vu que ça part de 0)
+TILE_TYPES = 235 # nombre à changer en fonction du nombre de pièces environnement (+1 vu que ça part de 0)
 level = 0
 current_tile = 0
 scroll_left = False
 scroll_right = False
 scroll = 0
-scroll_speed = 3
+scroll_speed = 0.5
 
 mountain_img = pygame.image.load('LevelEditor_Eric/decor/Montagnes.png').convert_alpha()
 mountain_img = pygame.transform.scale(mountain_img, (800,500))
 premierescene = pygame.image.load('Assets/Debut/devant.png').convert_alpha() # image de fond pour la première scène
-premierescene = pygame.transform.scale(premierescene, (1200, 750)) # scale image de la première scène
+premierescene = pygame.transform.scale(premierescene, (1200, 785)) # scale image de la première scène
 deuxiemescene = pygame.image.load('Assets/Debut/devant2.png').convert_alpha() # image de fond pour la deuxieme scène
-deuxiemescene = pygame.transform.scale(deuxiemescene, (1200, 750)) # scale image de la deuxieme scène
+deuxiemescene = pygame.transform.scale(deuxiemescene, (1200, 785)) # scale image de la deuxieme scène
 sky_img = pygame.image.load('LevelEditor_Eric/decor/Ciel.png').convert_alpha()
+
+escaliers = pygame.image.load('LevelEditor_Eric/decor/escalierfinal.png').convert_alpha()
+escaliers = pygame.transform.scale(escaliers, (600, 300))
+
+IndilaJaune = pygame.image.load('Assets/Idle/INDILA JAUNE/Indila Jaune D/INDILA_FRAME_1.png').convert_alpha()
+IndilaJaune = pygame.transform.scale(IndilaJaune, (70, 130))
 
 img_list = []
 for x in range(TILE_TYPES):
@@ -85,12 +90,18 @@ def draw_bg():
 	for x in range((SCREEN_WIDTH + SIDE_MARGIN) // width2 + 1): 
 		screen.blit(deuxiemescene, ((x * width) - scroll * 0.5 + SCREEN_WIDTH, 0)) # image de fond pour la deuxieme scène
 
-def draw_grid():
-    for c in range(MAX_COLS):
-        pygame.draw.line(screen, WHITE, (c * TILE_SIZE - scroll, 0), (c * TILE_SIZE - scroll, SCREEN_HEIGHT))
+	for x in range((SCREEN_WIDTH + SIDE_MARGIN) // width2 + 1): 
+		screen.blit(escaliers, ((x * width) - scroll * 0.5 + SCREEN_WIDTH + 600, 300)) # les escaliers
 
-    for c in range(ROWS + 1):
-        pygame.draw.line(screen, WHITE, (0, c * TILE_SIZE), (SCREEN_WIDTH, c * TILE_SIZE))
+	for x in range((SCREEN_WIDTH + SIDE_MARGIN) // width2 + 1): 
+		screen.blit(IndilaJaune, ((x * width) - scroll * 0.5 + SCREEN_WIDTH, 470)) # Indila Jaune
+
+# def draw_grid():
+#     for c in range(MAX_COLS):
+#         pygame.draw.line(screen, WHITE, (c * TILE_SIZE - scroll, 0), (c * TILE_SIZE - scroll, SCREEN_HEIGHT))
+
+#     for c in range(ROWS + 1):
+#         pygame.draw.line(screen, WHITE, (0, c * TILE_SIZE), (SCREEN_WIDTH, c * TILE_SIZE))
 
 
 def draw_world():
@@ -119,7 +130,7 @@ while run:
 	clock.tick(FPS)
 
 	draw_bg()
-	draw_grid()
+	# draw_grid()
 	draw_world()
 
 	draw_text(f'Level: {level}', font, WHITE, 10, SCREEN_HEIGHT + LOWER_MARGIN - 90)

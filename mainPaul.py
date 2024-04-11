@@ -20,7 +20,6 @@ clock = pygame.time.Clock()
 fps = 60
 dt = 0
 
-
 res = "img/mouvement/hidl/animation stand1.png"
 animations_walk = ["img/mouvement/run/course1.png", "img/mouvement/run/course2.png", "img/mouvement/run/course3.png"]
 animations_standing = ["img/mouvement/hidl/animation stand1.png", "img/mouvement/hidl/animation stand2.png", "img/mouvement/hidl/animation stand3.png", "img/mouvement/hidl/animation stand4.png", "img/mouvement/hidl/animation stand5.png"]
@@ -94,7 +93,7 @@ class Camera:
         self.camera = pygame.Rect(x, y, self.width, self.height)
         scroll = -x  
 
-class World:
+class World: #### POUR IMPORT MAP
     def __init__(self, data):
         self.tile_list = []
 
@@ -107,13 +106,11 @@ class World:
         self.width = len(data[0]) * tile_size
         self.height = len(data) * tile_size
 
-        # Déclaration d'un dictionnaire pour stocker les images des tuiles
         tile_images = {}
 
-        # Boucle pour charger les tuiles de 0 à 155
-        for i in range(171):
+        for i in range(171): ## bien remettre le nombre total de nos images (en sachant que ça commence par 0)
             
-            tile_images[i] = pygame.image.load(f"img/Cutted/{i}.png").convert_alpha()
+            tile_images[i] = pygame.image.load(f"Assets/Environnement/{i}.png").convert_alpha() ##normalement ce sont bien nos images
 
         # Initialisation de self.tile_images avec le dictionnaire des tuiles chargées
         self.tile_images = tile_images

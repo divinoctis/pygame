@@ -1,7 +1,8 @@
 import pygame
 import sys
 
-# nickel 
+# CODE POUR LES DEUX ARMES, SWITCHING AVEC UN KEYBIND.
+
 pygame.init()
 
 

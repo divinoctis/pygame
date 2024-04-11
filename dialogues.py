@@ -1,5 +1,6 @@
 import pygame
 
+# BASE DIALOGUE, JUSTE POUR TESTER.
 
 pygame.init()
 screen = pygame.display.set_mode((600, 500))
@@ -9,7 +10,7 @@ box = pygame.Rect(300, 200, 100, 100)
 player = pygame.Rect(50, 50, 30, 30)
 
 font = pygame.font.SysFont('Times New Roman', 25)
-texts = ['Hi', 'Hello', 'Who are ye?', 'Someone']
+texts = ['Hi', 'Hello']
 text_renders = [font.render(text, True, (0, 0, 255)) for text in texts]
 index = -1
 a_released = True

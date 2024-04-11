@@ -1,6 +1,6 @@
 import pygame
 
-### code qui sert à rien LMFAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO go pleurer
+# CODE OBSOLETE
 
 class Map:
     def __init__(self, map_data):

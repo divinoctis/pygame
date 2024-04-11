@@ -47,7 +47,7 @@ class Game:
         self.startMenu = True
 
         self.menuinstance = menu(0)
-        self.imagemenu = pygame.image.load("IMAGES\BG.png") #REMETTRE "back.jpg" POUR LE FINAL
+        self.imagemenu = pygame.image.load("LevelEditor_Eric/decor/Ciel.png") #REMETTRE "back.jpg" POUR LE FINAL
         self.menuB0 = menu(0)
         self.sizefont = 24
 

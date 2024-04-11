@@ -29,7 +29,7 @@ current_tile = 0
 scroll_left = False
 scroll_right = False
 scroll = 0
-scroll_speed = 0.5
+scroll_speed = 3
 
 mountain_img = pygame.image.load('LevelEditor_Eric/decor/Montagnes.png').convert_alpha()
 mountain_img = pygame.transform.scale(mountain_img, (800,500))

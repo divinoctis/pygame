@@ -2,6 +2,8 @@ import pygame
 import random
 import sys
 
+# CLASS DU MAIN.PY, AVEC LES BASES DU JEU.
+
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)

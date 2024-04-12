@@ -26,11 +26,11 @@ class Camera:   # cette classe permet se simuler le fait que la fenetre est fixe
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, game):
         super().__init__()
-        self.image = pygame.Surface((120, 240))
+        self.image = pygame.Surface((40, 80))
         self.image.fill(RED)
         self.rect = self.image.get_rect()
         self.rect.x = x
-        self.rect.y = y - 300
+        self.rect.y = y - 50
         self.vel_y = 0
         self.jump = False
         self.SCREEN_HEIGHT = y + 200
@@ -49,37 +49,37 @@ class Player(pygame.sprite.Sprite):
         self.delaylife = 60
 
         for num in range(1, 8):     # recupere les animation de marche et cree les diferent liste d'animation de droit et gauche
-            img_right = pygame.image.load(f"VersionFinaleLeo/Indila Jaune Marche/Indila_Jaune_Marche_F{num}.png")
-            img_right = pygame.transform.scale(img_right, (120, 240))
+            img_right = pygame.image.load(f"FinalV2/Indila Jaune Marche/Indila_Jaune_Marche_F{num}.png")
+            img_right = pygame.transform.scale(img_right, (40, 80))
             img_left = pygame.transform.flip(img_right, True, False)
             self.images_right.append(img_right)
             self.images_left.append(img_left)
         self.imagesprit = self.images_right[0]
 
         for num in range(1,5):      # recuper les image d'animation d'idle
-            img_idel = pygame.image.load(f"VersionFinaleLeo/Indila Jaune D/{num}.png")
-            img_idel = pygame.transform.scale(img_idel,(120, 240))
+            img_idel = pygame.image.load(f"FinalV2/Indila Jaune D/{num}.png")
+            img_idel = pygame.transform.scale(img_idel,(40,80))
             self.image_idel.append(img_idel)
 
         self.images_coeur = []
         for num in range(0, 4):     # recupere les image de la vie
-            img_coeur = pygame.image.load(f"VersionFinaleLeo/coeur/c{num}.png")
-            img_coeur = pygame.transform.scale(img_coeur, (160,60))
+            img_coeur = pygame.image.load(f"FinalV2/coeur/c{num}.png")
+            img_coeur = pygame.transform.scale(img_coeur, (80,30))
             self.images_coeur.append(img_coeur)
 
     def draw(self, screen): # afiche le player et sa zone de colision pour les test
         # screen.blit(self.image, (self.rect.x + self.game.camera_offset_x, self.rect.y))
         screen.blit(self.imagesprit, (self.rect.x + self.game.camera_offset_x, self.rect.y))
 
-    def jump_action(self):      # capte si le joeur veut sauter
+    def jump_action(self,dt):      # capte si le joeur veut sauter
         if self.jump == False and self.lockjump == False:
             self.jump = True
-            self.vel_y = -13
+            self.vel_y = -0.9 * dt
 
     def update(self, platforms, dt): # met a jour tout les fonction
         self.handle_movement(dt)
-        self.handle_jump()
-        self.handle_collisions(platforms)
+        self.handle_jump(dt)
+        self.handle_collisions(platforms,dt)
         self.handle_animation()
         self.delaylife += 1
 
@@ -94,9 +94,9 @@ class Player(pygame.sprite.Sprite):
             self.update_animation(self.images_right)
             self.direction = 2
 
-    def handle_jump(self):      # permet de simuler un saut
+    def handle_jump(self,dt):      # permet de simuler un saut
         if self.jump:
-            self.vel_y += 0.5
+            self.vel_y += 0.1 *dt
             if self.rect.y + self.vel_y >= self.SCREEN_HEIGHT+80:
                 self.rect.y = self.SCREEN_HEIGHT-100
                 self.jump = False
@@ -105,7 +105,7 @@ class Player(pygame.sprite.Sprite):
                 self.rect.y += self.vel_y
                 self.lockjump = True
 
-    def handle_collisions(self, platforms):     # permet de gere les colision en haut et en bas pendant les saut
+    def handle_collisions(self, platforms,dt):     # permet de gere les colision en haut et en bas pendant les saut
         platform_collision = pygame.sprite.spritecollideany(self, platforms)
         if platform_collision:
             if self.vel_y > 0:
@@ -116,7 +116,7 @@ class Player(pygame.sprite.Sprite):
                 self.rect.top = platform_collision.rect.bottom
                 self.vel_y = 0
         elif not platform_collision and self.jump == False:
-            self.rect.y += 5
+            self.rect.y += 0.1*dt
             self.jump = False
             self.lockjump = False
 
@@ -166,6 +166,7 @@ class Player(pygame.sprite.Sprite):
     def veriftp(self, postptarget):      # permet de teleporter le player sur les coordoner fourni par le teleporteur
         if postptarget[0][0] < self.rect.x < postptarget[0][0] + 30 and postptarget[0][1] < self.rect.y < postptarget[0][1] + 80\
                 or postptarget[0][0] < self.rect.x + 40 < postptarget[0][0] + 80 and postptarget[0][1] < self.rect.y + 30 < postptarget[0][1] + 30:
+            print("ok")
             self.rect.x = postptarget[1][0]
             self.rect.y = postptarget[1][1]
 
@@ -182,7 +183,7 @@ class Player(pygame.sprite.Sprite):
                 self.life = 3
 
             if self.life <= 0:
-
+                print("mort")
                 return False
             else :
                 return True
@@ -198,7 +199,7 @@ class Platform(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, game):
         super().__init__()
         self.image = pygame.Surface((width, height))
-        self.image.fill(BLACK)
+        self.image.fill(WHITE)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -252,12 +253,12 @@ class Door(pygame.sprite.Sprite):
 class menu:
     def __init__(self, Y):
         self.boutonimg = []
-        self.image = pygame.image.load(f"VersionFinaleLeo/bouton/{Y}.png")
+        self.image = pygame.image.load(f"FinalV2/bouton/{Y}.png")
         self.image = pygame.transform.scale(self.image,(600,100))
         self.hovercColor = (100, 100, 100)
         self.spaceBetwen = (150 * Y) -1
         self.startPosition = [660,200+self.spaceBetwen]
-        self.imageMenu = pygame.image.load("VersionFinaleLeo/back.png")  # REMETTRE "back.jpg" POUR LE FINAL
+        self.imageMenu = pygame.image.load("LevelEditor_Eric/decor/Ciel.png")
         self.rect = pygame.Rect((50, 150 + (100 * Y)),(600,100))
 
     def draw(self, screen):         # afiche les bouton
@@ -269,6 +270,7 @@ class menu:
     def detecteclick(self,pos):     # verifi si on clique sur un bouton et r'envoi vrais ou faux
         mouse = pygame.event.get()
         for event in mouse:
+            print(self.startPosition)
             if self.startPosition[0]<pos[0]<self.startPosition[0]+600 and self.startPosition[1]<pos[1]<self.startPosition[1]+100 and event.type == pygame.MOUSEBUTTONDOWN:
                 return False
         return True
@@ -289,7 +291,7 @@ class liane():
         self.rect = pygame.Rect(self.pos, self.size)
         self.coordonate = [self.size, self.pos]
         self.game = game
-        self.img = pygame.transform.scale(pygame.image.load("VersionFinaleLeo/lianes.png"),(50,200))
+        self.img = pygame.transform.scale(pygame.image.load("FinalV2/lianes.png"),(50,200))
 
     def draw(self, screen):     # afiche la zone des liane
         pygame.draw.rect(screen, (0, 255, 0),(self.rect.x + self.game.camera_offset_x, self.rect.y, self.rect.w, self.rect.h))
@@ -301,15 +303,15 @@ class liane():
 
 class tprect():
     def __init__(self, game):
-        self.imgpr = pygame.image.load("VersionFinaleLeo/portail.png")
+        self.imgpr = pygame.image.load("FinalV2/portail.png")
         self.imgpr = pygame.transform.scale(self.imgpr, (100, 100))
-        self.imgpb = pygame.image.load("VersionFinaleLeo/portail bleu.png")
+        self.imgpb = pygame.image.load("FinalV2/portail bleu.png")
         self.imgpb = pygame.transform.scale(self.imgpb, (100, 100))
         self.postp = [10, 960]
         self.colortp = [90, 90, 255]
         self.sizetp = [40, 80]
         self.recttp = pygame.Rect(self.postp, self.sizetp)
-        self.postarget = [10000, 960]
+        self.postarget = [1000, 960]
         self.colortarget = [255, 128, 0]
         self.sizetarget = [40, 80]
         self.recttarget = pygame.Rect(self.postarget, self.sizetarget)
@@ -359,9 +361,9 @@ class spike():
         self.game = game
         self.image = []
         self.imagenumber = 0
-        self.imgpic = pygame.image.load("VersionFinaleLeo/pic.png")
+        self.imgpic = pygame.image.load("FinalV2/pic.png")
         self.imgpic = pygame.transform.scale(self.imgpic,(100,20))
-        self.imgbase = pygame.image.load("VersionFinaleLeo/base.png")
+        self.imgbase = pygame.image.load("FinalV2/base.png")
         self.imgbase = pygame.transform.scale(self.imgbase, (100, 60))
 
         self.chutepicspeed = 4
@@ -419,7 +421,7 @@ class spike():
 
 class boul():       # piege de boule qui tombe est roule pour ecraser le joeur
     def __init__(self,x,y,d,game):
-        self.image = pygame.image.load('boule.png')
+        self.image = pygame.image.load('FinalV2/boule.png')
         self.image = pygame.transform.scale(self.image, (160, 160))
         self.rect = self.image.get_rect()
         self.rect.x = 160
@@ -484,25 +486,4 @@ class boul():       # piege de boule qui tombe est roule pour ecraser le joeur
             self.posy = 1060-160
             self.chute = False
             self.active = True
-
-class decord(pygame.sprite.Sprite):
-    def __init__(self,x,y,num,game):
-        super().__init__()
-        self.image= pygame.transform.scale(pygame.image.load(f"VersionFinaleLeo/Environnement/{num}.png"),(80,80))
-        self.posx = -180+(80*x)
-        self.posy = -240+(80*y)
-        self.game= game
-    def draw(self,screen):
-        screen.blit(self.image,(self.posx+self.game.camera_offset_x,self.posy))
-
-class imgfond2(pygame.sprite.Sprite):
-    def __init__(self,game,ran,i):
-        super().__init__()
-        self.x = (-180)+(26*90*i)
-        self.y = 1.6*90
-        self.ibf = pygame.image.load(f"VersionFinaleLeo/f{ran}.png")
-        self.ibf = pygame.transform.scale(self.ibf, (30 * 80, 9.5 * 80))
-        self.game = game
-    def draw(self,screen):
-        screen.blit(self.ibf,(self.x+self.game.camera_offset_x,self.y))
 

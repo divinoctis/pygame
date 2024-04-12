@@ -27,7 +27,6 @@ play2 = player()
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((800,600))
 color_list
-
 while True :
 
     for event in pygame.event.get():
